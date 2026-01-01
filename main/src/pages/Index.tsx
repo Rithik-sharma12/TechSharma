@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ArticleCard from "@/components/blog/ArticleCard";
+import AdminFAB from "@/components/admin/AdminFAB";
 import { fetchFeaturedArticle, fetchLatestArticles, StrapiArticle } from "@/lib/api";
 import { getFeaturedArticle, getLatestArticles, Article } from "@/data/articles";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -137,6 +138,7 @@ const Index = () => {
       </main>
 
       <Footer />
+      <AdminFAB />
     </div>
   );
 };

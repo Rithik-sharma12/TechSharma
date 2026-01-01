@@ -13,6 +13,7 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import AdminDashboard from "./pages/AdminDashboard";
 import ArticleEditor from "./pages/ArticleEditor";
+import SectionManager from "./pages/SectionManager";
 import Bookmarks from "./pages/Bookmarks";
 import Ideas from "./pages/Ideas";
 import NotFound from "./pages/NotFound";
@@ -60,6 +61,11 @@ const App = () => (
             <Route path="/admin/article/:id" element={
               <ProtectedRoute requireAdmin>
                 <ArticleEditor />
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/sections" element={
+              <ProtectedRoute requireAdmin>
+                <SectionManager />
               </ProtectedRoute>
             } />
             

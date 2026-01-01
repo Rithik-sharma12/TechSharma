@@ -6,6 +6,8 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ReadingProgress from "@/components/blog/ReadingProgress";
 import CodeBlock from "@/components/blog/CodeBlock";
+import AdminFAB from "@/components/admin/AdminFAB";
+import AdminArticleControls from "@/components/admin/AdminArticleControls";
 import { getArticleById, Article as ArticleType } from "@/data/articles";
 import { fetchArticleBySlug, StrapiArticle } from "@/lib/api";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -324,7 +326,18 @@ const Article = () => {
         </div>
       </article>
 
+      {/* Admin Controls - Floating buttons for edit/delete */}
+      {strapiArticle && (
+        <AdminArticleControls
+          articleDocumentId={strapiArticle.documentId}
+          articleSlug={strapiArticle.slug || strapiArticle.documentId}
+          articleTitle={strapiArticle.title}
+          variant="floating"
+        />
+      )}
+
       <Footer />
+      <AdminFAB />
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ArticleCard from "@/components/blog/ArticleCard";
+import AdminFAB from "@/components/admin/AdminFAB";
 import { getArticlesBySection, articles, Article } from "@/data/articles";
 import { fetchArticlesBySection, StrapiArticle } from "@/lib/api";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -163,6 +164,7 @@ const Section = () => {
       </main>
 
       <Footer />
+      <AdminFAB />
     </div>
   );
 };

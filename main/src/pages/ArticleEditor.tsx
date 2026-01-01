@@ -339,6 +339,21 @@ const ArticleEditor = () => {
                   onChange={(e) => setFormData(prev => ({ ...prev, imageUrl: e.target.value }))}
                   placeholder="https://example.com/image.jpg"
                 />
+                {formData.imageUrl && (
+                  <div className="mt-2 relative rounded-lg overflow-hidden border border-border">
+                    <img
+                      src={formData.imageUrl}
+                      alt="Cover preview"
+                      className="w-full h-48 object-cover"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  </div>
+                )}
+                <p className="text-xs text-muted-foreground">
+                  Tip: Use free images from Unsplash (unsplash.com) or Pexels (pexels.com)
+                </p>
               </div>
 
               <div className="space-y-2">
