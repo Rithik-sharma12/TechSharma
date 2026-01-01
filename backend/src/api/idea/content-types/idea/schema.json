@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "ideas",
+  "info": {
+    "singularName": "idea",
+    "pluralName": "ideas",
+    "displayName": "Idea",
+    "description": "User submitted ideas and suggestions"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "content": {
+      "type": "richtext",
+      "required": true
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": ["pending", "approved", "rejected", "implemented"],
+      "default": "pending"
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": ["feature", "improvement", "bug", "content", "other"],
+      "default": "other"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "adminNotes": {
+      "type": "text"
+    },
+    "votes": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}
