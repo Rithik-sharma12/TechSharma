@@ -1,14 +1,16 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
+interface UserRole {
+  id: number;
+  name: string;
+  type: string;
+}
+
 interface User {
   id: number;
   username: string;
   email: string;
-  role?: {
-    id: number;
-    name: string;
-    type: string;
-  };
+  role?: UserRole;
 }
 
 interface AuthContextType {
@@ -17,6 +19,7 @@ interface AuthContextType {
   isLoading: boolean;
   isAuthenticated: boolean;
   isAdmin: boolean;
+  userRole: string | null;
   login: (identifier: string, password: string) => Promise<{ success: boolean; error?: string }>;
   register: (username: string, email: string, password: string) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
@@ -25,6 +28,20 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const STRAPI_URL = import.meta.env.VITE_STRAPI_URL || 'http://localhost:1337';
+
+// Helper function to check if user has admin privileges
+const checkIsAdmin = (user: User | null): boolean => {
+  if (!user?.role) return false;
+  const roleName = user.role.name?.toLowerCase();
+  const roleType = user.role.type?.toLowerCase();
+  return (
+    roleName === 'admin' || 
+    roleName === 'administrator' || 
+    roleName === 'super admin' ||
+    roleType === 'admin' ||
+    roleType === 'administrator'
+  );
+};
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -97,11 +114,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         localStorage.setItem('user', JSON.stringify(userData));
         return { success: true };
       } else {
-        return { success: false, error: data.error?.message || 'Login failed' };
+        return { success: false, error: data.error?.message || 'Invalid credentials' };
       }
-    } catch (error) {
-      console.error('Login error:', error);
-      return { success: false, error: 'Network error. Please try again.' };
+    } catch (error: any) {
+      return { success: false, error: error?.message || 'Network error. Please check if the server is running.' };
     }
   };
 
@@ -126,9 +142,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       } else {
         return { success: false, error: data.error?.message || 'Registration failed' };
       }
-    } catch (error) {
-      console.error('Registration error:', error);
-      return { success: false, error: 'Network error. Please try again.' };
+    } catch (error: any) {
+      return { success: false, error: error?.message || 'Network error. Please check if the server is running.' };
     }
   };
 
@@ -140,7 +155,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const isAuthenticated = !!token && !!user;
-  const isAdmin = user?.role?.type === 'admin' || user?.role?.name === 'Admin';
+  const isAdmin = checkIsAdmin(user);
+  const userRole = user?.role?.name || null;
 
   return (
     <AuthContext.Provider
@@ -150,6 +166,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         isLoading,
         isAuthenticated,
         isAdmin,
+        userRole,
         login,
         register,
         logout,

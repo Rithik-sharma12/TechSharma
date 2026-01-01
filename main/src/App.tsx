@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import Index from "./pages/Index";
 import Article from "./pages/Article";
 import Section from "./pages/Section";
@@ -26,17 +27,43 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
+            {/* Public Routes */}
             <Route path="/" element={<Index />} />
             <Route path="/article/:id" element={<Article />} />
             <Route path="/section/:section" element={<Section />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/article/:id" element={<ArticleEditor />} />
-            <Route path="/bookmarks" element={<Bookmarks />} />
-            <Route path="/ideas" element={<Ideas />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            
+            {/* Authenticated User Routes */}
+            <Route path="/profile" element={
+              <ProtectedRoute requireAuth>
+                <Profile />
+              </ProtectedRoute>
+            } />
+            <Route path="/bookmarks" element={
+              <ProtectedRoute requireAuth>
+                <Bookmarks />
+              </ProtectedRoute>
+            } />
+            <Route path="/ideas" element={
+              <ProtectedRoute requireAuth>
+                <Ideas />
+              </ProtectedRoute>
+            } />
+            
+            {/* Admin Only Routes - CRUD Operations */}
+            <Route path="/admin" element={
+              <ProtectedRoute requireAdmin>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/article/:id" element={
+              <ProtectedRoute requireAdmin>
+                <ArticleEditor />
+              </ProtectedRoute>
+            } />
+            
+            {/* Catch-all */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
