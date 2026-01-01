@@ -142,7 +142,7 @@
 
 ## 🛠️ Tech Stack
 
-### 🎨 Frontend (`code-canvas/`)
+### 🎨 Frontend (`main/`)
 
 | Technology | Version | Purpose |
 |:-----------|:-------:|:--------|
@@ -221,7 +221,7 @@ Before you begin, ensure you have the following installed:
 
 3. **Setup Frontend**
    ```bash
-   cd ../code-canvas
+   cd ../main
    npm install
    cp .env.example .env
    ```
@@ -234,7 +234,7 @@ Before you begin, ensure you have the following installed:
 
 5. **Start Frontend** (Terminal 2)
    ```bash
-   cd code-canvas
+   cd main
    npm run dev
    ```
 
@@ -251,7 +251,7 @@ Before you begin, ensure you have the following installed:
 
 ### Frontend Environment Variables
 
-Create `code-canvas/.env`:
+Create `main/.env`:
 
 ```env
 # Strapi API URL
@@ -311,7 +311,7 @@ TechSharma/
 │   ├── .env.example
 │   └── package.json
 │
-├── 📂 code-canvas/                # React Frontend
+├── 📂 main/                       # React Frontend
 │   ├── 📂 public/
 │   ├── 📂 src/
 │   │   ├── 📂 components/

@@ -36,7 +36,7 @@ A modern tech blog built with React, TypeScript, and Tailwind CSS, powered by a 
 ### Frontend Setup
 
 ```bash
-cd code-canvas
+cd main
 npm install
 cp .env.example .env
 npm run dev
@@ -54,7 +54,7 @@ npm run dev
 
 ## Environment Variables
 
-### Frontend (`code-canvas/.env`)
+### Frontend (`main/.env`)
 ```
 VITE_STRAPI_URL=http://localhost:1337
 ```
